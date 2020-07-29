@@ -32,6 +32,14 @@
    (moves
     :initform '("PAPER" "ROCK" "SCISSORS"))))
 
+(defgeneric init-agent (player)
+  (:documentation "generic method for initializing an agent"))
+
+(defmethod init-agent ((player human))
+  (format t "What is your name? > ")
+  (setf (slot-value player 'name) (read))
+  (format t "Welcome, ~a.  Let's play!~%" (slot-value player 'name)))
+
 (defgeneric prompt-move (game player)
   (:documentation "generic method for picking a move"))
 
@@ -46,7 +54,11 @@
 (defun play (p1 p2 game)
   (let ((m1 (prompt-move game p1))
 	(m2 (prompt-move game p2)))
-    (format t "player 1: ~a~%player 2: ~a~%" m1 m2)
+    (format t "~a: ~a~%~a: ~a~%"
+	    (slot-value p1 'name)
+	    m1
+	    (slot-value p2 'name)
+	    m2)
     (cond
       ((eq (compare m1 m2) t) (incf (slot-value p1 'score)))
       ((eq (compare m2 m1) t) (incf (slot-value p2 'score)))
@@ -58,9 +70,10 @@
 
 (defun make-game ()
   (let ((game (make-instance 'paper-rock-scissors))
-	(p1 (make-instance 'human :name "Jimmy"))
-	(p2 (make-instance 'player :name "player 2")))
-    (play p1 p2 game)))
+	(p1 (make-instance 'human))
+	(p2 (make-instance 'player :name "Computer")))
+    (init-agent p1)
+    (dotimes (i 10) (play p1 p2 game))))
 
 (defun keep-playing()
-  (loop (make-game))))
+  (loop (make-game)))
