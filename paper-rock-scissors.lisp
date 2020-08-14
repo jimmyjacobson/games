@@ -1,3 +1,5 @@
+(in-package :com.jimmyjacobson.games)
+
 (defparameter *moves* '('paper 'rock 'scissors))
 
 (defun compare (p1 p2)
