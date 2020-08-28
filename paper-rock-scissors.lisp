@@ -1,11 +1,15 @@
 (in-package :com.jimmyjacobson.games)
 
-(defun make-game ()
+(defun make-game (&key (max-steps 1) (player1 'robot) (player2 'robot))
   (let ((game (make-instance 'paper-rock-scissors))
-	(p1 (make-instance 'human))
-	(p2 (make-instance 'player :name "Computer")))
+	(p1 (make-agent player1))
+	(p2 (make-agent player2)))
     (init-agent p1)
-    (dotimes (i 10) (play p1 p2 game))))
+    (init-agent p2)
+    (dotimes (i max-steps) (play p1 p2 game))))
 
-(defun keep-playing()
-  (loop (make-game)))
+(defun make-agent (&optional type)
+  (cond
+    ((string= type 'robot) (make-instance 'player :name "Computer"))
+    ((string= type 'human) (make-instance 'human))
+    (t (make-instance 'player :name "Computer"))))

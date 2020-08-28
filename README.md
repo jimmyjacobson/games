@@ -12,8 +12,8 @@ I prefer iterating on these examples as I learn more LISP.
 
 `(in-package com.jimmyjacobson.games)`
 
+To run a single round of the game with two random robot agents use:
 `(make-game)`
 
-game -> paper-rock-scissors
-agent -> human
-agent -> random
+To run a 10 round game with a human as player 1 use
+`(make-game :max-steps 10 :player1 'human)`

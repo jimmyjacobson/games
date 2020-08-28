@@ -11,6 +11,9 @@
 (defgeneric init-agent (player)
   (:documentation "generic method for initializing an agent"))
 
+(defmethod init-agent ((robot player))
+  (declare (ignore robot)))
+
 (defgeneric prompt-move (moves player)
   (:documentation "generic method for picking a move"))
 
