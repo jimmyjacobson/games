@@ -12,7 +12,7 @@
   (:documentation "generic method for initializing an agent"))
 
 (defmethod init-agent ((robot player))
-  (declare (ignore robot)))
+  (setf (slot-value robot 'name) "Robot"))
 
 (defgeneric prompt-move (moves player)
   (:documentation "generic method for picking a move"))
